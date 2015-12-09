@@ -33,23 +33,25 @@ class DatatablesPluginsAsset extends \yii\web\AssetBundle
 	
 	public function registerAssetFiles($view)
 	{
-		array_walk_recursive($this->plugins, function($value, $key, $u){
-			if($key==='css'){
-				if(is_string($value))
-					$u[0][]=$value;
-				elseif(is_array($value)){
-					foreach ($value as $css){
-						if(is_string($css))
-							$u[0][]=$css;
+		array_walk_recursive($this->plugins, function($value, $key, $u) {
+			if ($key === 'css') {
+				if (is_string($value)) {
+					$u[0][] = $value;
+				} elseif (is_array($value)) {
+					foreach ($value as $css) {
+						if (is_string($css)) {
+							$u[0][] = $css;
+						}
 					}
 				}
-			}elseif($key==='js'){
-				if(is_string($value))
-					$u[1][]=$value;
-				elseif(is_array($value)){
-					foreach ($value as $js){
-						if(is_string($js))
-							$u[1][]=$css;
+			} elseif ($key === 'js') {
+				if (is_string($value)) {
+					$u[1][] = $value;
+				} elseif(is_array($value)) {
+					foreach ($value as $js) {
+						if (is_string($js)) {
+							$u[1][] = $js;
+						}
 					}
 				}
 			}

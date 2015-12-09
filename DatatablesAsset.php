@@ -31,7 +31,7 @@ class DatatablesAsset extends \yii\web\AssetBundle
 	
 	public function registerAssetFiles($view)
 	{
-		if($this->registerCss){
+		if ($this->registerCss) {
 			$this->css = [
 				'media/css/jquery.dataTables.min.css',
 			];

@@ -24,10 +24,11 @@ class Colvis extends BaseExtension
 	
 	public function registerAssetFiles($view)
 	{
-		if(isset($this->gridView->plugins['jqueryui']))
+		if (!empty($this->gridView->plugins['jqueryui'])) {
 			$this->css = ['css/dataTables.colvis.jqueryui.css'];
-		else
+		} else {
 			$this->css = ['css/dataTables.colVis.css'];
+		}
 		parent::registerAssetFiles($view);
 	}
 }

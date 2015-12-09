@@ -8,30 +8,29 @@
     "authors": [
         {
             "name": "Andrey Borodulin",
-            "email": "borodulin@gmail.com",
-            "homepage": "https://github.com/borodulin/yii2-datatables"
+            "email": "borodulin@gmail.com"
         }
     ],
     "extra": {
         "branch-alias": {
-          "dev-master": "1.0.0.x-dev"
+          "dev-master": "1.0.1.x-dev"
         }
     },
     "require": {
     	"php": ">=5.4.0",
     	"yiisoft/yii2": "*",
-    	"conquer/helpers": "~1.0.0",
-        "bower-asset/datatables": "~1.10",
-        "bower-asset/datatables-plugins": "~1.0",
-        "bower-asset/datatables-fixedheader": "~2.1.2",
-        "bower-asset/datatables-colreorder": "~1.1.3",
-        "bower-asset/datatables-keytable": "~1.2.1",
-        "bower-asset/datatables-fixedcolumns": "~3.0.4",
-        "bower-asset/datatables-responsive": "~1.0.5",
-        "bower-asset/datatables-tabletools": "~2.2.2",
-        "bower-asset/datatables-scroller": "~1.2.2",
-        "bower-asset/datatables-autofill": "~1.2.1",
-        "bower-asset/datatables-colvis": "~1.1.2"
+    	"conquer/helpers": "*",
+        "bower-asset/datatables": ">=1.10",
+        "bower-asset/datatables-plugins": ">=1.0",
+        "bower-asset/datatables-fixedheader": ">=2.1.2",
+        "bower-asset/datatables-colreorder": ">=1.1.3",
+        "bower-asset/datatables-keytable": ">=1.2.1",
+        "bower-asset/datatables-fixedcolumns": ">=3.0.4",
+        "bower-asset/datatables-responsive": ">=1.0.5",
+        "bower-asset/datatables-tabletools": ">=2.2.2",
+        "bower-asset/datatables-scroller": ">=1.2.2",
+        "bower-asset/datatables-autofill": ">=1.2.1",
+        "bower-asset/datatables-colvis": ">=1.1.2"
     },
 	"autoload": {
 		"psr-4": {
