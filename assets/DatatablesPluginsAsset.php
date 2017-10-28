@@ -18,7 +18,6 @@ class DatatablesPluginsAsset extends AssetBundle
     public $sourcePath = '@bower/datatables.net-plugins';
 
     public $js = [
-        'features/pageSize/dataTables.pageResize.js',
     ];
 
     public $depends = [

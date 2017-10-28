@@ -16,10 +16,10 @@ use yii\web\Request;
 use yii\web\Response;
 
 /**
- * Class DatatableAction
+ * Class DatatablesAction
  * @package conquer\datatables
  */
-class DatatableAction extends Action
+class DatatablesAction extends Action
 {
 
     /**
@@ -118,7 +118,10 @@ class DatatableAction extends Action
      */
     protected function getParam($name, $defaultValue = null)
     {
-        return $this->request->isPost ?
-            $this->request->post($name, $defaultValue) : $this->request->get($name, $defaultValue);
+        if ($this->request->isPost) {
+            return $this->request->post($name, $defaultValue);
+        } else {
+            return $this->request->get($name, $defaultValue);
+        }
     }
 }
