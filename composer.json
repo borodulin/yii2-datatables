@@ -13,7 +13,7 @@
     ],
     "extra": {
         "branch-alias": {
-          "dev-master": "1.0.3.x-dev"
+          "dev-master": "1.0.3.1-dev"
         }
     },
     "require": {
@@ -28,6 +28,8 @@
         "bower-asset/datatables.net-scroller-bs": ">=1.4.3",
         "bower-asset/datatables.net-rowgroup": ">=1.0.2",
         "bower-asset/datatables.net-rowgroup-bs": ">=1.0.2",
+        "bower-asset/datatables.net-rowreorder": ">=1.2.3",
+        "bower-asset/datatables.net-rowreorder-bs": ">=1.2.3",
         "bower-asset/datatables.net-select": ">=1.2.3",
         "bower-asset/datatables.net-select-bs": ">=1.2.3",
         "bower-asset/datatables.net-colreorder": ">=1.4.1",
