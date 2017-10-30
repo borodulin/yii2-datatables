@@ -11,6 +11,7 @@ use Throwable;
 use Yii;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
 use yii\db\Query;
 use yii\web\Request;
 use yii\web\Response;
@@ -91,9 +92,13 @@ class DatatablesAction extends Action
         $order = $this->getParam('order', []);
         if (is_callable($this->filterCallback)) {
             call_user_func($this->filterCallback, $filteredQuery, $columns, $search);
+        } elseif ($this->query instanceof ActiveQuery) {
+            $this->activeFilter($this->query, $columns, $search);
         }
         if (is_callable($this->orderCallback)) {
             call_user_func($this->orderCallback, $filteredQuery, $columns, $order);
+        } elseif ($this->query instanceof ActiveQuery) {
+            $this->activeOrder($this->query, $columns, $order);
         }
 
         $filteredQuery->offset($this->getParam('start', 0));
@@ -122,6 +127,53 @@ class DatatablesAction extends Action
             return $this->request->post($name, $defaultValue);
         } else {
             return $this->request->get($name, $defaultValue);
+        }
+    }
+
+    /**
+     * @param ActiveQuery $query
+     * @param array $columns
+     * @param array $search
+     * @throws InvalidConfigException
+     */
+    protected function activeFilter(ActiveQuery $query, $columns, $search)
+    {
+        /** @var \yii\db\ActiveRecord $modelClass */
+        $modelClass = $query->modelClass;
+        $schema = $modelClass::getTableSchema()->columns;
+        foreach ($columns as $column) {
+            if (isset($schema[$column['data']], $column['searchable']) && $column['searchable'] === 'true') {
+                if (isset($search['value'], $column['search']['value'])) {
+                    $query->orFilterWhere([
+                        'and',
+                        ['like', $column['data'], $search['value']],
+                        ['like', $column['data'], $column['search']['value']],
+                    ]);
+                } elseif (isset($search['value'])) {
+                    $query->orFilterWhere(['like', $column['data'], $search['value']]);
+                } elseif (isset($column['search']['value'])) {
+                    $query->orFilterWhere(['like', $column['data'], $column['search']['value']]);
+                }
+            }
+        }
+    }
+    /**
+     * @param ActiveQuery $query
+     * @param array $columns
+     * @param array $orders
+     */
+    protected function activeOrder(ActiveQuery $query, $columns, $orders)
+    {
+        /** @var \yii\db\ActiveRecord $modelClass */
+        $modelClass = $query->modelClass;
+        $schema = $modelClass::getTableSchema()->columns;
+        foreach ($orders as $order) {
+            $column = $columns[$order['column']];
+            if (isset($schema[$column['data']], $column['orderable']) && $column['orderable'] === 'true') {
+                $query->addOrderBy([
+                    $column['data'] => $order['dir'] === 'desc' ? SORT_DESC : SORT_ASC
+                ]);
+            }
         }
     }
 }

@@ -33,29 +33,39 @@ use yii\helpers\Url;
 class DatatablesWidget extends Widget
 {
     /**
-     * @var
+     * @var array
      */
     public $columns;
 
+    /**
+     * Html options
+     * @var array
+     */
     public $tableOptions = [];
 
     /**
-     * @var
+     * Datatables options
+     * @var array
      */
     public $options;
 
     /**
-     * @var
+     * i18n
+     * @var string
      */
     public $language;
 
     /**
-     * @var
+     * @see Url::to()
+     * @var string|array
+     * @link https://datatables.net/reference/option/ajax
      */
     public $ajax;
 
     /**
-     * @var
+     * Data to use as the display data for the table
+     * @var array
+     * @link https://datatables.net/reference/option/data
      */
     public $data;
 
