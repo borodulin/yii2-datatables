@@ -127,7 +127,9 @@ class DatatablesWidget extends Widget
 
     public function run()
     {
-        echo Html::beginTag('table', $this->tableOptions);
+        $tableOptions = $this->tableOptions;
+        $tableOptions['id'] = $this->options['id'];
+        echo Html::beginTag('table', $tableOptions);
         echo Html::beginTag('thead');
         echo Html::beginTag('tr');
         foreach ($this->columns as $column) {
