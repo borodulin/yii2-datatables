@@ -344,7 +344,7 @@ class DatatablesWidget extends Widget
         if ($this->stateSave !== null) {
             $options['stateSave'] = $this->stateSave;
         }
-        
+
         if ($this->language) {
             if (strlen($this->language) === 2) {
                 if ($lang = $this->i18n($this->language)) {
