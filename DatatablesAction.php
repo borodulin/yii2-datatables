@@ -92,13 +92,13 @@ class DatatablesAction extends Action
         $order = $this->getParam('order', []);
         if (is_callable($this->filterCallback)) {
             call_user_func($this->filterCallback, $filteredQuery, $columns, $search);
-        } elseif ($query instanceof ActiveQuery) {
-            $this->activeFilter($query, $columns, $search);
+        } elseif ($filteredQuery instanceof ActiveQuery) {
+            $this->activeFilter($filteredQuery, $columns, $search);
         }
         if (is_callable($this->orderCallback)) {
             call_user_func($this->orderCallback, $filteredQuery, $columns, $order);
-        } elseif ($query instanceof ActiveQuery) {
-            $this->activeOrder($query, $columns, $order);
+        } elseif ($filteredQuery instanceof ActiveQuery) {
+            $this->activeOrder($filteredQuery, $columns, $order);
         }
 
         $filteredQuery->offset($this->getParam('start', 0));
@@ -142,18 +142,30 @@ class DatatablesAction extends Action
         $modelClass = $query->modelClass;
         $schema = $modelClass::getTableSchema()->columns;
         foreach ($columns as $column) {
-            if (isset($schema[$column['data']], $column['searchable']) && $column['searchable'] === 'true') {
-                if (isset($search['value'], $column['search']['value'])) {
-                    $query->orFilterWhere([
-                        'and',
-                        ['like', $column['data'], $search['value']],
-                        ['like', $column['data'], $column['search']['value']],
-                    ]);
-                } elseif (isset($search['value'])) {
-                    $query->orFilterWhere(['like', $column['data'], $search['value']]);
-                } elseif (isset($column['search']['value'])) {
-                    $query->orFilterWhere(['like', $column['data'], $column['search']['value']]);
+            $name = $column['data'];
+            if (isset($schema[$name], $column['searchable']) && $column['searchable'] === 'true') {
+                if (!empty($column['search']['value'])) {
+                    $searchValue = $column['search']['value'];
+                } elseif (!empty($search['value'])) {
+                    $searchValue = $search['value'];
+                } else {
+                    continue;
                 }
+                $type = $schema[$name]->phpType;
+                if ($type === 'integer' && !is_int($searchValue)) {
+                    continue;
+                }
+                if ($type === 'boolean') {
+                    $searchValue = filter_var($searchValue, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                    if ($searchValue === null) {
+                        continue;
+                    }
+                }
+                if ($type === 'double' && !is_numeric($searchValue)) {
+                    continue;
+                }
+                $operator = ($type === 'string') ? 'like' : '=';
+                $query->orFilterWhere([$operator, $name, $searchValue]);
             }
         }
     }
