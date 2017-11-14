@@ -152,7 +152,7 @@ class DatatablesAction extends Action
                     continue;
                 }
                 $type = $schema[$name]->phpType;
-                if ($type === 'integer' && !is_int($searchValue)) {
+                if ($type === 'integer' && !filter_var($searchValue, FILTER_VALIDATE_INT)) {
                     continue;
                 }
                 if ($type === 'boolean') {
