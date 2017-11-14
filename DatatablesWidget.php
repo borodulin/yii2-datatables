@@ -33,6 +33,7 @@ use yii\helpers\Url;
 class DatatablesWidget extends Widget
 {
     /**
+     * ["name" => "title"]
      * @var array
      */
     public $columns;
@@ -254,7 +255,7 @@ class DatatablesWidget extends Widget
         echo Html::beginTag('table', $tableOptions);
         echo Html::beginTag('thead');
         echo Html::beginTag('tr');
-        foreach ($this->columns as $column) {
+        foreach ((array)$this->columns as $column) {
             echo Html::tag('th', $column);
         }
         echo Html::endTag('tr');
