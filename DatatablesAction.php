@@ -92,13 +92,13 @@ class DatatablesAction extends Action
         $order = $this->getParam('order', []);
         if (is_callable($this->filterCallback)) {
             call_user_func($this->filterCallback, $filteredQuery, $columns, $search);
-        } elseif ($this->query instanceof ActiveQuery) {
-            $this->activeFilter($this->query, $columns, $search);
+        } elseif ($query instanceof ActiveQuery) {
+            $this->activeFilter($query, $columns, $search);
         }
         if (is_callable($this->orderCallback)) {
             call_user_func($this->orderCallback, $filteredQuery, $columns, $order);
-        } elseif ($this->query instanceof ActiveQuery) {
-            $this->activeOrder($this->query, $columns, $order);
+        } elseif ($query instanceof ActiveQuery) {
+            $this->activeOrder($query, $columns, $order);
         }
 
         $filteredQuery->offset($this->getParam('start', 0));
