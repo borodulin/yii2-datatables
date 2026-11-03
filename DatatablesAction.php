@@ -9,6 +9,7 @@ namespace conquer\datatables;
 
 use Throwable;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -43,6 +44,20 @@ class DatatablesAction extends Action
      * @var callable
      */
     public $filterCallback;
+
+    /**
+     * Maximum number of rows returned per request. The client-supplied "length" (including -1, "all rows")
+     * is capped by this value.
+     * @var int
+     */
+    public $maxLength = 1000;
+
+    /**
+     * Attributes returned to the client. When null, rows are returned as the query produces them
+     * (all columns of ActiveRecord models). Set it to avoid leaking columns such as password hashes.
+     * @var string[]|null
+     */
+    public $attributes;
 
     /**
      * @var Request
@@ -101,17 +116,22 @@ class DatatablesAction extends Action
             $this->activeOrder($filteredQuery, $columns, $order);
         }
 
-        $filteredQuery->offset($this->getParam('start', 0));
-        $filteredQuery->limit($this->getParam('length', -1));
+        $length = (int)$this->getParam('length', $this->maxLength);
+        if ($length <= 0 || $length > $this->maxLength) {
+            $length = $this->maxLength;
+        }
+        $filteredQuery->offset(max(0, (int)$this->getParam('start', 0)));
+        $filteredQuery->limit($length);
         try {
             return [
                 'draw' => (int)$draw,
                 'recordsTotal' => (int)$query->count(),
                 'recordsFiltered' => (int)$filteredQuery->count(),
-                'data' => $filteredQuery->all(),
+                'data' => $this->formatRows($filteredQuery->all()),
             ];
         } catch (Throwable $e) {
-            return ['error' => $e->getMessage()];
+            Yii::error($e, __METHOD__);
+            return ['error' => YII_DEBUG ? $e->getMessage() : 'Unable to load data.'];
         }
     }
 
@@ -187,5 +207,25 @@ class DatatablesAction extends Action
                 ]);
             }
         }
+    }
+
+    /**
+     * @param array $rows
+     * @return array
+     */
+    protected function formatRows($rows)
+    {
+        if ($this->attributes === null) {
+            return $rows;
+        }
+        $result = [];
+        foreach ($rows as $row) {
+            $item = [];
+            foreach ($this->attributes as $attribute) {
+                $item[$attribute] = ArrayHelper::getValue($row, $attribute);
+            }
+            $result[] = $item;
+        }
+        return $result;
     }
 }

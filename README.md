@@ -45,7 +45,11 @@ class UserController extends \yii\web\Controller
         return [
             'datatables' => [
                 'class' => DatatablesAction::class,
-                'query' => User::find()->select(['id', 'username', 'email'])->asArray(),
+                'query' => User::find(),
+                // only these fields are sent to the browser
+                'attributes' => ['id', 'username', 'email'],
+                // maximum rows per request (client "length", including -1, is capped)
+                'maxLength' => 500,
             ],
         ];
     }
@@ -62,6 +66,9 @@ or to customize the behavior, provide callbacks:
 ```
 
 `query` can also be a callable returning the query.
+
+> **Security:** without `attributes` every column selected by the query is returned to the client
+> (for `User::find()` that includes password hashes and tokens). Always set `attributes` or restrict `select()`.
 
 View:
 
