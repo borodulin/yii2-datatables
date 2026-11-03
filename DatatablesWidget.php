@@ -287,7 +287,7 @@ class DatatablesWidget extends Widget
             DatatablesButtonsBsAsset::register($view);
         }
         if ($this->colReorder !== null) {
-            $options['colReoreder'] = $this->colReorder;
+            $options['colReorder'] = $this->colReorder;
             DatatablesColReorderBsAsset::register($view);
         }
         if ($this->fixedColumns !== null) {
