@@ -26,7 +26,7 @@ The interface language is taken from `Yii::$app->language` automatically.
 Install the extension via [Composer](https://getcomposer.org):
 
 ```bash
-composer require conquer/datatables:^1.1
+composer require conquer/datatables:^2.0
 ```
 
 ## Usage
@@ -70,6 +70,20 @@ or to customize the behavior, provide callbacks:
 > **Security:** without `attributes` every column selected by the query is returned to the client
 > (for `User::find()` that includes password hashes and tokens). Always set `attributes` or restrict `select()`.
 
+Search conditions are added to the query with `AND`, so conditions of the configured query
+(for example `->where(['tenant_id' => $tenantId])`) always apply. The global search matches any searchable column,
+column searches must all match.
+
+DataTables inserts cell data as HTML, so string values are HTML-encoded by default.
+List attributes that intentionally contain markup built by the server in `rawAttributes`
+(`'encode' => false` disables encoding completely):
+
+```php
+'rawAttributes' => ['actions'],
+```
+
+The widget encodes client-side `data` the same way (`encodeData`, `rawAttributes`).
+
 View:
 
 ```php
@@ -110,6 +124,14 @@ Common DataTables options are available as widget properties: `autoWidth`, `defe
 Extension options (`autoFill`, `buttons`, `colReorder`, `fixedColumns`, `fixedHeader`, `keys`,
 `responsive`, `rowGroup`, `rowReorder`, `scroller`, `select`) also register the corresponding assets.
 Any other [DataTables option](https://datatables.net/reference/option/) can be passed via `options`.
+
+## Upgrading to 2.0
+
+- String values returned by `DatatablesAction` and client-side `data` of the widget are HTML-encoded.
+  If a column intentionally contains HTML built on the server, add it to `rawAttributes`
+  (or set `'encode' => false` / `'encodeData' => false` to restore the 1.x behaviour).
+- A column search with a value that cannot match the column type (for example text in an integer column)
+  now returns no rows instead of being ignored.
 
 ## License
 

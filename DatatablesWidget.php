@@ -71,6 +71,18 @@ class DatatablesWidget extends Widget
     public $data;
 
     /**
+     * HTML-encode string values of `data` (client-side rows). DataTables inserts cell data as HTML.
+     * @var bool
+     */
+    public $encodeData = true;
+
+    /**
+     * Keys of `data` rows that are rendered without HTML encoding; their values must be safe HTML.
+     * @var string[]
+     */
+    public $rawAttributes = [];
+
+    /**
      * AutoFill adds an Excel like data fill option to DataTables,
      * allowing click and drag over cells,
      * filling in information and incrementing numbers as needed.
@@ -276,7 +288,7 @@ class DatatablesWidget extends Widget
             }
         }
         if ($this->data !== null) {
-            $options['data'] = $this->data;
+            $options['data'] = $this->encodeData ? $this->encodeRows($this->data) : $this->data;
         }
         if ($this->autoFill !== null) {
             $options['autoFill'] = $this->autoFill;
@@ -382,8 +394,30 @@ class DatatablesWidget extends Widget
         if ($columns) {
             $options['aoColumns'] = $columns;
         }
-        $options = Json::encode($options);
-        $view->registerJs("$('#$id').DataTable($options);");
+        // htmlEncode: "</script>" in data must not end the inline script
+        $options = Json::htmlEncode($options);
+        $view->registerJs('$(' . Json::htmlEncode('#' . $id) . ').DataTable(' . $options . ');');
+    }
+
+    /**
+     * @param array $rows
+     * @return array
+     */
+    protected function encodeRows($rows)
+    {
+        foreach ($rows as $index => $row) {
+            if (!is_array($row)) {
+                $rows[$index] = DatatablesAction::encodeValue($row);
+                continue;
+            }
+            foreach ($row as $key => $value) {
+                if (!in_array($key, $this->rawAttributes, true)) {
+                    $row[$key] = DatatablesAction::encodeValue($value);
+                }
+            }
+            $rows[$index] = $row;
+        }
+        return $rows;
     }
 
     /**
