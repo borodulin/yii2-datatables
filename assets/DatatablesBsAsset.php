@@ -7,23 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesBsAsset extends AssetBundle
+class DatatablesBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-bs';
+    public $package = 'datatables.net';
 
-    public $css = [
-        'css/dataTables.bootstrap.min.css',
-    ];
-
-    public $js = [
-        'js/dataTables.bootstrap.min.js',
-    ];
 
     public $depends = [
         'conquer\datatables\assets\DatatablesAsset',

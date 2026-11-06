@@ -18,7 +18,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "2.1.x-dev"
         }
     },
     "require": {
@@ -49,6 +49,10 @@
         "bower-asset/datatables.net-autofill-bs": "^2.2.2",
         "bower-asset/datatables.net-buttons": "^1.1.2",
         "bower-asset/datatables.net-buttons-bs": "^1.1.2"
+    },
+    "suggest": {
+        "bower-asset/datatables.net-bs4": "Bootstrap 4 styling (and the -bs4 packages of the extensions you use)",
+        "npm-asset/datatables.net-bs5": "Bootstrap 5 styling (and the -bs5 packages of the extensions you use)"
     },
     "autoload": {
         "psr-4": {

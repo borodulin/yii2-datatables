@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesFixedHeaderBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesFixedHeaderBsAsset extends AssetBundle
+class DatatablesFixedHeaderBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-fixedheader-bs';
-    
-    public $css = [
-        'css/fixedHeader.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-fixedheader';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesFixedHeaderAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

@@ -18,7 +18,7 @@ class DatatablesKeytableAsset extends AssetBundle
     public $sourcePath = '@bower/datatables.net-keytable';
     
     public $js = [
-        'js/dataTables.keytable.min.js',
+        'js/dataTables.keyTable.min.js',
     ];
     
     public $depends = [

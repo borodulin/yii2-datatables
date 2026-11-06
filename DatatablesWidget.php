@@ -20,6 +20,7 @@ use conquer\datatables\assets\DatatablesRowGroupBsAsset;
 use conquer\datatables\assets\DatatablesRowReorderBsAsset;
 use conquer\datatables\assets\DatatablesScrollerBsAsset;
 use conquer\datatables\assets\DatatablesSelectBsAsset;
+use conquer\datatables\assets\DatatablesStyleAsset;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
@@ -75,6 +76,15 @@ class DatatablesWidget extends Widget
      * @var bool
      */
     public $encodeData = true;
+
+    /**
+     * Bootstrap version of the table styling: 3, 4 or 5.
+     * null (default) detects it from the installed Yii Bootstrap extension
+     * (yii2-bootstrap, then yii2-bootstrap4, then yii2-bootstrap5), 3 if none is installed.
+     * Bootstrap 4 and 5 need the DataTables styling packages, see README.
+     * @var int|null
+     */
+    public $bsVersion;
 
     /**
      * Keys of `data` rows that are rendered without HTML encoding; their values must be safe HTML.
@@ -280,6 +290,7 @@ class DatatablesWidget extends Widget
     {
         $view = $this->getView();
         $options = $this->options;
+        DatatablesStyleAsset::$bsVersion = $this->bsVersion === null ? static::detectBsVersion() : (int)$this->bsVersion;
         DatatablesBsAsset::register($view);
         if ($this->ajax !== null) {
             $options['ajax'] = $this->ajax;
@@ -397,6 +408,23 @@ class DatatablesWidget extends Widget
         // htmlEncode: "</script>" in data must not end the inline script
         $options = Json::htmlEncode($options);
         $view->registerJs('$(' . Json::htmlEncode('#' . $id) . ').DataTable(' . $options . ');');
+    }
+
+    /**
+     * @return int Bootstrap version of the installed Yii Bootstrap extension, 3 if none is found
+     */
+    public static function detectBsVersion()
+    {
+        if (class_exists('yii\\bootstrap\\BootstrapAsset')) {
+            return 3;
+        }
+        if (class_exists('yii\\bootstrap4\\BootstrapAsset')) {
+            return 4;
+        }
+        if (class_exists('yii\\bootstrap5\\BootstrapAsset')) {
+            return 5;
+        }
+        return 3;
     }
 
     /**

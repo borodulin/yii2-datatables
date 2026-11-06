@@ -6,7 +6,7 @@
 
 ## Description
 
-Yii2 integration of [DataTables](https://datatables.net) 1.10 with Bootstrap styling:
+Yii2 integration of [DataTables](https://datatables.net) 1.x with Bootstrap 3, 4 or 5 styling:
 
 - `DatatablesWidget` renders a table and initializes DataTables, registering only the extensions you use
   (AutoFill, Buttons, ColReorder, FixedColumns, FixedHeader, KeyTable, Responsive, RowGroup, RowReorder, Scroller, Select);
@@ -26,8 +26,40 @@ The interface language is taken from `Yii::$app->language` automatically.
 Install the extension via [Composer](https://getcomposer.org):
 
 ```bash
-composer require conquer/datatables:^2.0
+composer require conquer/datatables:^2.1
 ```
+
+### Bootstrap version
+
+The styling follows the installed Yii Bootstrap extension (`yiisoft/yii2-bootstrap` → 3, `yii2-bootstrap4` → 4,
+`yii2-bootstrap5` → 5); set `'bsVersion' => 5` on the widget to choose it explicitly.
+Bootstrap 3 styling is installed with this extension. For Bootstrap 4 and 5 install the DataTables styling packages
+of the core and of the extensions you use, for example:
+
+```bash
+# Bootstrap 4
+composer require bower-asset/datatables.net-bs4:^1.10.16 bower-asset/datatables.net-buttons-bs4:^1.1
+# Bootstrap 5
+composer require npm-asset/datatables.net-bs5:^1.13 npm-asset/datatables.net-buttons-bs5:^1.7
+```
+
+| Extension | Bootstrap 4 | Bootstrap 5 |
+|---|---|---|
+| core | `bower-asset/datatables.net-bs4:^1.10.16` | `npm-asset/datatables.net-bs5:^1.13` |
+| AutoFill | `bower-asset/datatables.net-autofill-bs4:^2.2` | `npm-asset/datatables.net-autofill-bs5:^2.3` |
+| Buttons | `bower-asset/datatables.net-buttons-bs4:^1.1` | `npm-asset/datatables.net-buttons-bs5:^1.7` |
+| ColReorder | `bower-asset/datatables.net-colreorder-bs4:^1.4` | `npm-asset/datatables.net-colreorder-bs5:^1.5` |
+| FixedColumns | `bower-asset/datatables.net-fixedcolumns-bs4:^3.2` | `npm-asset/datatables.net-fixedcolumns-bs5:^3.3` |
+| FixedHeader | `bower-asset/datatables.net-fixedheader-bs4:^3.1` | `npm-asset/datatables.net-fixedheader-bs5:^3.1` |
+| KeyTable | `bower-asset/datatables.net-keytable-bs4:^2.3` | `npm-asset/datatables.net-keytable-bs5:^2.6` |
+| Responsive | `bower-asset/datatables.net-responsive-bs4:^2.2` | `npm-asset/datatables.net-responsive-bs5:^2.2` |
+| RowGroup | `bower-asset/datatables.net-rowgroup-bs4:^1.0` | `npm-asset/datatables.net-rowgroup-bs5:^1.1` |
+| RowReorder | `bower-asset/datatables.net-rowreorder-bs4:^1.2` | `npm-asset/datatables.net-rowreorder-bs5:^1.2` |
+| Scroller | `bower-asset/datatables.net-scroller-bs4:^1.4` | `npm-asset/datatables.net-scroller-bs5:^2.0` |
+| Select | `bower-asset/datatables.net-select-bs4:^1.2` | `npm-asset/datatables.net-select-bs5:^1.3` |
+
+A missing styling package is reported with an `InvalidConfigException` naming the package to install.
+Bootstrap itself (CSS and JavaScript) is included by your layout, as usual.
 
 ## Usage
 

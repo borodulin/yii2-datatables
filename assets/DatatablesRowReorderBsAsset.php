@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesRowReorderBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesRowReorderBsAsset extends AssetBundle
+class DatatablesRowReorderBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-rowreorder-bs';
-    
-    public $css = [
-        'css/rowReorder.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-rowreorder';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesRowReorderAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesButtonsBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesButtonsBsAsset extends AssetBundle
+class DatatablesButtonsBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-buttons-bs';
-    
-    public $css = [
-        'css/buttons.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-buttons';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesButtonsAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

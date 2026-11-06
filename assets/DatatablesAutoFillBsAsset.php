@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesAutoFillBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesAutoFillBsAsset extends AssetBundle
+class DatatablesAutoFillBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-autofill-bs';
-    
-    public $css = [
-        'css/autoFill.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-autofill';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesAutoFillAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

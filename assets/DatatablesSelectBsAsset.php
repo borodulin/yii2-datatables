@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesSelectBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesSelectBsAsset extends AssetBundle
+class DatatablesSelectBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-select-bs';
-    
-    public $css = [
-        'css/select.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-select';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesSelectAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

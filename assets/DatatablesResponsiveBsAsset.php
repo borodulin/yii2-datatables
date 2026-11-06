@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesResponsiveBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesResponsiveBsAsset extends AssetBundle
+class DatatablesResponsiveBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-responsive-bs';
-    
-    public $css = [
-        'css/responsive.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-responsive';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesResponsiveAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

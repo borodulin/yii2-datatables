@@ -7,22 +7,17 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesScrollerBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesScrollerBsAsset extends AssetBundle
+class DatatablesScrollerBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-scroller-bs';
-    
-    public $css = [
-        'css/scroller.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-scroller';
+
     public $depends = [
-        'conquer\datatables\assets\DatatablesSelectAsset',
+        'conquer\datatables\assets\DatatablesScrollerAsset',
         'conquer\datatables\assets\DatatablesBsAsset',
     ];
 }

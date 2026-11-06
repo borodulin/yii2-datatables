@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesFixedColumnsBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesFixedColumnsBsAsset extends AssetBundle
+class DatatablesFixedColumnsBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-fixedcolumns-bs';
-    
-    public $css = [
-        'css/fixedColumns.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-fixedcolumns';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesFixedColumnsAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

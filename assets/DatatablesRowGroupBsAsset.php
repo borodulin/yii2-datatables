@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesRowGroupBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesRowGroupBsAsset extends AssetBundle
+class DatatablesRowGroupBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-rowgroup-bs';
-    
-    public $css = [
-        'css/rowGroup.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-rowgroup';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesRowGroupAsset',
         'conquer\datatables\assets\DatatablesBsAsset',

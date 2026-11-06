@@ -7,20 +7,15 @@
 
 namespace conquer\datatables\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * Class DatatablesColReorderBsAsset
  * @package conquer\datatables\assets
  */
-class DatatablesColReorderBsAsset extends AssetBundle
+class DatatablesColReorderBsAsset extends DatatablesStyleAsset
 {
-    public $sourcePath = '@bower/datatables.net-colreorder-bs';
-    
-    public $css = [
-        'css/colReorder.bootstrap.min.css',
-    ];
-    
+    public $package = 'datatables.net-colreorder';
+
     public $depends = [
         'conquer\datatables\assets\DatatablesColReorderAsset',
         'conquer\datatables\assets\DatatablesBsAsset',
